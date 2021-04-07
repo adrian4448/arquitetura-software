@@ -9,5 +9,5 @@ public interface FuncionarioInterface {
 	void cadastrarFuncionario(Funcionario funcionario);
 	void calcularSalario(Funcionario funcionario);
 	List<Funcionario> getFuncionarios();
-	
+	void registrarHorasTrabalhadas(Funcionario funcionario);
 }
