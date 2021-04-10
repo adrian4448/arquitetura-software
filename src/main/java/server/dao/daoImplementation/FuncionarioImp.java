@@ -1,12 +1,10 @@
 package server.dao.daoImplementation;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import server.connect.*;
 
@@ -15,117 +13,83 @@ import server.entity.Funcionario;
 
 public class FuncionarioImp implements FuncionarioInterface {
 
-	private Connection conn;
-
-	public FuncionarioImp(Connection connection) {
-		this.conn = connection;
-	}
-
 	@Override
 	public void cadastrarFuncionario(Funcionario funcionario) {
-		PreparedStatement st = null;
+		StringBuilder sql = new StringBuilder();
 		try {
-			st = conn.prepareStatement("INSERT INTO funcionario " + "(Nome, ValorHoras, HorasTrabalhadas, Ativo) "
-					+ "VALUES " + "(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-			st.setString(1, funcionario.getNome());
-			st.setDouble(2, funcionario.getValorHoras());
-			st.setDouble(3, funcionario.getHorasTrabalhadas());
-			st.setBoolean(4, funcionario.getAtivo());
-
-			int rowsAffected = st.executeUpdate();
-
-			if (rowsAffected > 0) {
-				ResultSet rs = st.getGeneratedKeys();
-				if (rs.next()) {
-					int id = rs.getInt(1);
-					funcionario.setCodigo(id);
-				}
-				Db.closeResultSet(rs);
-			} else {
-				System.out.println("Nenhuma linha foi alterada");
-			}
-		} catch (SQLException e) {
+			sql.append("INSERT INTO funcionario (Nome, ValorHoras, Ativo, HorasTrabalhadas) VALUES (");
+			sql.append("'" + funcionario.getNome() + "',");
+			sql.append("'" + funcionario.getValorHoras() + "',");
+			sql.append("'" + funcionario.getAtivo() + "',");
+			sql.append("'" + 0 + "')");
+			Db.executaDataManipulation(sql);
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			Db.closeStatement(st);
 		}
-
 	}
 
 	@Override
 	public void calcularSalario(Funcionario funcionario) {
-		PreparedStatement st = null;
+		StringBuilder sql = new StringBuilder();
 		try {
-			Double salario = funcionario.getHorasTrabalhadas() * funcionario.getValorHoras();
-			 st = conn.prepareStatement(
-                     "UPDATE funcionario "
-                     + "SET SalarioMensal = ?"
-                     + "WHERE Codigo = ?");
-			 
-			 st.setDouble(1, salario);
-			 st.setInt(2, funcionario.getCodigo());
-		}catch(SQLException e) {
+			sql.append("UPDATE funcionario set HorasTrabalhadas = '").append(funcionario.getHorasTrabalhadas() + "', ");
+			sql.append(" dtTrabalhado = '").append(funcionario.getDtTrabalhado() + "'");
+			sql.append(" WHERE Codigo = '").append(funcionario.getCodigo() + "'");
+			Db.executaDataManipulation(sql);
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public List<Funcionario> getFuncionarios() {
-		PreparedStatement st = null;
+		List<Funcionario> funcionarios = new ArrayList<>();
 		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
 		try {
-			st = conn.prepareStatement("SELECT Codigo, Nome, ValorHoras, HorasTrabalhadas, Ativo"
-					+ "FROM funcionario" + "ORDER BY Name");
-
-			rs = st.executeQuery();
-
-			List<Funcionario> list = new ArrayList<>();
-
-			while (rs.next()) {
-
-				Funcionario funcionario = instanciarFuncionario(rs);
-				list.add(funcionario);
+			sql.append("SELECT * FROM funcionario order by Nome");
+			rs = Db.executaSelect(sql);
+			while(rs.next()) {
+				funcionarios.add(instanciarFuncionario(rs));
 			}
-			return list;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Db.closeStatement(st);
-			Db.closeResultSet(rs);
+		}catch(Exception e) {
+			System.out.print(e.getStackTrace());
 		}
-		return null;
+		return funcionarios;
 	}
-
-	 private Funcionario instanciarFuncionario(ResultSet rs) throws SQLException {
-	      	Funcionario funcionario = new Funcionario();
-	      	funcionario.setCodigo(rs.getInt("Codigo"));
-	      	funcionario.setNome(rs.getString("Nome"));
-	      	funcionario.setValorHoras(rs.getDouble("ValorHoras"));
-	      	funcionario.setHorasTrabalhadas(rs.getInt("HorasTrabalhadas"));
-	      	funcionario.setAtivo(rs.getBoolean("Ativo"));
-	      	return funcionario;
-	    }
-
+	
 	@Override
-	public void registrarHorasTrabalhadas(Funcionario funcionario) {
-		 PreparedStatement st = null;
-	       try{
-	           st = conn.prepareStatement(
-	                     "UPDATE funcionario "
-	                     + "SET HorasTrabalhadas = ?"
-	                     + "WHERE Codigo = ?");
-	           
-	           st.setInt(1, funcionario.getHorasTrabalhadas());
-	           st.setInt(2, funcionario.getCodigo());
-	           
-	            st.executeUpdate();
-
-	       }catch(SQLException e){
-	          e.printStackTrace();
-	       }finally{
-	           Db.closeStatement(st);
-	       }
-		
+	public List<Funcionario> gastosPeriodo(HashMap<String, Object> params) {
+		List<Funcionario> funcionarios = new ArrayList<>();
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		try {
+			sql.append(" SELECT * FROM funcionario ");
+			sql.append(" WHERE dtTrabalhado BETWEEN '").append(params.get("DT_INICIO") + "'");
+			sql.append(" AND '").append(params.get("DT_FIM") + "'");
+			sql.append(" order by dtTrabalhado");
+			rs = Db.executaSelect(sql);
+			while(rs.next()) {
+				funcionarios.add(instanciarFuncionario(rs));
+			}
+		}catch(Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+		return funcionarios;
 	}
+	
+	private Funcionario instanciarFuncionario(ResultSet rs) throws SQLException {
+		Funcionario funcionario = new Funcionario();
+		funcionario.setCodigo(rs.getInt("Codigo"));
+		funcionario.setNome(rs.getString("Nome"));
+		funcionario.setValorHoras(rs.getDouble("ValorHoras"));
+		funcionario.setHorasTrabalhadas(rs.getInt("HorasTrabalhadas"));
+		if(rs.getDate("dtTrabalhado") != null) {
+			funcionario.setDtTrabalhado(LocalDate.parse(rs.getDate("DtTrabalhado").toString()));
+		}
+		funcionario.setAtivo(rs.getInt("Ativo"));
+		return funcionario;
+	}
+
+	
 }

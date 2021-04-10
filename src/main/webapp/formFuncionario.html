@@ -10,15 +10,16 @@
 <body>
     <div class="container">
         <h1>Adicionar novo Funcionario</h1>
-        <form class="form-cadastro" action="inserirContato">
-            <input class="input-text" type="text" name="Nome" placeholder=" Nome">
-            <input class="input-text" type="text" name="Horas" placeholder=" Horas">
-            <select class="combo-box">
+        <form class="form-cadastro" action="CadastrarFuncionario">
+            <input class="input-text" type="text" name="nome" placeholder=" Nome">
+            <input class="input-text" type="text" name="valorHoras" placeholder=" Valor Horas">
+            <select name="ativo" class="combo-box">
                 <option>Ativo</option>
                 <option>Inativo</option>
             </select>
-            <input class="input-button" type="button" value="Cadastrar">
+            <input class="input-button" type="button" value="Cadastrar" onclick="validarCadastro()">
         </form>
     </div>
+    <script src="Script/cadastrarFuncionario.js"></script>
 </body>
 </html>

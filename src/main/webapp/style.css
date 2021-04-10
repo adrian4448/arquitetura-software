@@ -92,6 +92,42 @@ a {
     border-radius: 5px;
 }
 
+.datas input {
+	 width: 140px;
+}
+
 h1 {
     font-size: 20px;
+}
+
+.tabela-gastos th {
+	width: 950px;
+	padding: 10px;
+	background-color: black;
+	color: white; 
+}
+
+.gastos {
+	margin-bottom: 200px;
+	padding: 20px;
+}
+
+.filtro-gastos {
+	margin: 10px;
+}
+
+.tabela-gastos {
+	margin: 10px;
+	border-collapse: collapse;
+	border-radius: 5px;
+}
+
+.tabela-gastos td {
+	width: 950px;
+	padding: 10px;
+	background-color: white;
+}
+
+b {
+	background-color: white;
 }

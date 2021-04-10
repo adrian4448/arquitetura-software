@@ -1,18 +1,21 @@
 package server.entity;
 
+import java.time.LocalDate;
+
 public class Funcionario {
 	
 	private Integer codigo;
 	private String  nome;
 	private Double  valorHoras;
 	private Integer horasTrabalhadas;
-	private Boolean ativo;
+	private Integer ativo;
+	private LocalDate dtTrabalhado;
 	
 	public Funcionario() {
 		
 	}
-	
-	public Funcionario(Integer codigo, String nome, Double valorHoras, Integer horasTrabalhadas, Boolean ativo) {
+
+	public Funcionario(Integer codigo, String nome, Double valorHoras, Integer horasTrabalhadas, Integer ativo) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.valorHoras = valorHoras;
@@ -20,7 +23,7 @@ public class Funcionario {
 		this.ativo = ativo;
 	}
 	
-	public Funcionario(String nome, Double valorHoras, Integer horasTrabalhadas, Boolean ativo) {
+	public Funcionario(String nome, Double valorHoras, Integer horasTrabalhadas, Integer ativo) {
 		this.nome = nome;
 		this.valorHoras = valorHoras;
 		this.horasTrabalhadas = horasTrabalhadas;
@@ -51,10 +54,16 @@ public class Funcionario {
 	public void setHorasTrabalhadas(Integer horasTrabalhadas) {
 		this.horasTrabalhadas = horasTrabalhadas;
 	}
-	public Boolean getAtivo() {
+	public Integer getAtivo() {
 		return ativo;
 	}
-	public void setAtivo(Boolean ativo) {
+	public void setAtivo(Integer ativo) {
 		this.ativo = ativo;
+	}
+	public LocalDate getDtTrabalhado() {
+		return dtTrabalhado;
+	}
+	public void setDtTrabalhado(LocalDate dtTrabalhado) {
+		this.dtTrabalhado = dtTrabalhado;
 	}
 }
