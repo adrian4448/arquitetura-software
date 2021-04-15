@@ -22,14 +22,14 @@
             <div class="datas">
             	<input class="input-text" type="date" name="dataTrabalhada" placeholder=" Data de Inicio">       
             </div>
-            <select class="combo-box" name="idFuncionario">
+            <select class="combo-box" name="idFuncionario" required>
 			<%
 				for(Funcionario func : funcionarios) {
 			%>
 				<option data-id="<%= func.getCodigo() %>"> <%= func.getNome() %> </option>		
 			<% 	} %>
             </select>
-            <input class="input-button" type="button" value="Cadastrar" onclick="calcularSalario()">
+            <input class="input-button" type="button" value="Calcular" onclick="calcularSalario()">
         </form>
         
     </div>

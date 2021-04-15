@@ -22,7 +22,7 @@
 <body>
 	<div class="container">
 		<div class="gastos">
-			<form class="filtro-gastos" action="gastosPeriodo">
+			<form class="filtro-gastos" action="GastosPeriodo">
 				<input class="input-text" type="date" name="dataInicial" placeholder=" Data Inicial">
 				<input class="input-text" type="date" name="dataFinal" placeholder=" Data Final">
 				<input class="input-button" type="button" value="Buscar" onclick="gastosPeriodo()">

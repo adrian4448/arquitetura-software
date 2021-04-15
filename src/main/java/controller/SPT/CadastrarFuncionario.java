@@ -1,4 +1,4 @@
-package controller;
+package controller.SPT;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import server.dao.DaoFactory;
 import server.dao.daoInterfaces.FuncionarioInterface;
 import server.entity.Funcionario;
 
-@WebServlet("/CadastrarFuncionario")
+@WebServlet("/SPT/CadastrarFuncionario")
 public class CadastrarFuncionario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,7 +28,7 @@ public class CadastrarFuncionario extends HttpServlet {
 		funcionario.setValorHoras(valorHoras);
 		funcionario.setAtivo(funcionarioAtivo(request.getParameter("ativo")));
 		funcionarioDao.cadastrarFuncionario(funcionario);
-		response.sendRedirect("folhaPagamento.html");
+		response.sendRedirect("inicioSPT.html");
 	}
 	
 	private Integer funcionarioAtivo(String ativo) {

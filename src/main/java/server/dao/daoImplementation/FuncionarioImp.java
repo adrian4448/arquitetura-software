@@ -67,7 +67,7 @@ public class FuncionarioImp implements FuncionarioInterface {
 			sql.append(" SELECT * FROM funcionario ");
 			sql.append(" WHERE dtTrabalhado BETWEEN '").append(params.get("DT_INICIO") + "'");
 			sql.append(" AND '").append(params.get("DT_FIM") + "'");
-			sql.append(" order by dtTrabalhado");
+			sql.append(" order by Codigo");
 			rs = Db.executaSelect(sql);
 			while(rs.next()) {
 				funcionarios.add(instanciarFuncionario(rs));

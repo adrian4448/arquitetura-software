@@ -1,4 +1,4 @@
-package controller;
+package controller.SPT;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ import server.dao.DaoFactory;
 import server.dao.daoInterfaces.FuncionarioInterface;
 import server.entity.Funcionario;
 
-@WebServlet(urlPatterns = { "/CalcularSalario", "/calcular" })
+@WebServlet(urlPatterns = { "/SPT/CalcularSalario", "/SPT/calcular" })
 public class CalcularSalario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -27,14 +27,14 @@ public class CalcularSalario extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!"/calcular".equals(request.getServletPath())) {
+		if(!("/SPT/calcular".equals(request.getServletPath()))) {
 			ArrayList<Funcionario> funcionarios = (ArrayList<Funcionario>) funcionarioDao.getFuncionarios(); 
 			request.setAttribute("funcionarios", funcionarios);
 			RequestDispatcher rd = request.getRequestDispatcher("calcularSalario.jsp");
 			rd.forward(request, response);
 		}else {
 			calcular(request, response);
-		}		
+		}
 	}
 
 	private void calcular(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class CalcularSalario extends HttpServlet {
 		func.setCodigo(Integer.parseInt(request.getParameter("idFuncionario")));
 		func.setDtTrabalhado(LocalDate.parse(request.getParameter("dataTrabalhada")));
 		funcionarioDao.calcularSalario(func);
-		response.sendRedirect("folhaPagamento.html");
+		response.sendRedirect("inicioSPT.html");
 	}
 	
 }

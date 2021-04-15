@@ -1,4 +1,4 @@
-package controller;
+package controller.SPT;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,11 +18,11 @@ import server.dao.DaoFactory;
 import server.dao.daoInterfaces.FuncionarioInterface;
 import server.entity.Funcionario;
 
-@WebServlet("/gastosPeriodo")
-public class gastosPeriodo extends HttpServlet {
+@WebServlet("/SPT/GastosPeriodo")
+public class GastosPeriodo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public gastosPeriodo() {
+    public GastosPeriodo() {
         super();
     }
 

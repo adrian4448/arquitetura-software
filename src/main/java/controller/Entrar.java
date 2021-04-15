@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Entrar")
+@WebServlet(urlPatterns = {"/SPT", "/SIG"})
 public class Entrar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,11 @@ public class Entrar extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("folhaPagamento.html");
+		if("/SPT".equals(request.getServletPath())) {
+			response.sendRedirect("SPT/inicioSPT.html");
+		}else if("/SIG".equals(request.getServletPath())) {
+			response.sendRedirect("");
+		} 
 	}
 
 }
