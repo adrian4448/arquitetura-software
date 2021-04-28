@@ -1,4 +1,4 @@
-package controller;
+package controller.SIG.custos;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/SPT", "/SIG"})
-public class Entrar extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+import server.dao.DaoFactory;
 
-    public Entrar() {
+@WebServlet("/SIG/excluirCusto")
+public class excluirCusto extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public excluirCusto() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if("/SPT".equals(request.getServletPath())) {
-			response.sendRedirect("SPT/inicioSPT.html"); 
-		}else if("/SIG".equals(request.getServletPath())) {
-			response.sendRedirect("SIG/inicioSIG.html");
-		}
+		Integer id = Integer.parseInt(request.getParameter("codigo"));
+		DaoFactory.createCustoDao().excluirCusto(id);
+		response.sendRedirect("buscarCustos");
 	}
 
 }

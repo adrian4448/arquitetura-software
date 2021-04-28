@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<title>Cadastrar Custo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="container-center">
+		<div class="container-form">
+			<form class="generic-form" action="cadastrarCusto" method="POST">
+				<h1> Cadastrar Custo </h1>
+				<input type="text" name="descricao" placeholder="Descrição" required>
+				<input type="number" name="valorMensal" placeholder="Valor Mensal" required>
+				<select name="ativo" required>
+					<option>Ativo</option>
+					<option>Inativo</option>
+				</select>
+				<div class="buttons">
+					<input type="button" value="Cadastrar" onclick="cadastrarCusto()">
+					<a href="buscarCustos"> Cancelar </a>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<script src="scripts/scriptCustos.js"></script>
+</body>
+</html>

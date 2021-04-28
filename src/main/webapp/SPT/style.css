@@ -71,7 +71,11 @@ a {
 
 .form-cadastro {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;   
+}
+
+.form-cadastro h1 {
+	text-align: center;
 }
 
 .form-cadastro input, select {

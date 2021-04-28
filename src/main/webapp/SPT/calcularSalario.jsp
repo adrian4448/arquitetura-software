@@ -16,8 +16,8 @@
 </head>
 <body>
     <div class="container">
-        <h1> Calcular Salario </h1>
         <form class="form-cadastro" action="calcular"> 
+            <h1> Calcular Salario </h1>
             <input class="input-text" type="text" name="horasTrabalhadas" placeholder=" Horas trabalhadas">
             <div class="datas">
             	<input class="input-text" type="date" name="dataTrabalhada" placeholder=" Data de Inicio">       
